@@ -40,7 +40,7 @@ public class PushExample {
 	public static void main(String[] args) {
 //        testSendPushWithCustomConfig();
 //        testSendIosAlert();
-		testSendPush();
+        testSendPush();
 	}
 	
 	

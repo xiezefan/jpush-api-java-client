@@ -1,5 +1,7 @@
 package cn.jpush.api.push;
 
+import cn.jiguang.common.connection.Http2Client;
+import cn.jiguang.common.connection.IHttpClient;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 
@@ -8,7 +10,6 @@ import cn.jiguang.commom.ServiceHelper;
 import cn.jiguang.commom.utils.Preconditions;
 import cn.jiguang.commom.utils.StringUtils;
 import cn.jiguang.common.connection.HttpProxy;
-import cn.jiguang.common.connection.NativeHttpClient;
 import cn.jiguang.common.resp.APIConnectionException;
 import cn.jiguang.common.resp.APIRequestException;
 import cn.jiguang.common.resp.BaseResult;
@@ -27,7 +28,7 @@ import cn.jpush.api.push.model.PushPayload;
  */
 public class PushClient {
 
-    private final NativeHttpClient _httpClient;
+    private final IHttpClient _httpClient;
     private String _baseUrl;
     private String _pushPath;
     private String _pushValidatePath;
@@ -85,7 +86,7 @@ public class PushClient {
         this._timeToLive = (Long) conf.get(ClientConfig.TIME_TO_LIVE);
 
         String authCode = ServiceHelper.getBasicAuthorization(appKey, masterSecret);
-        this._httpClient = new NativeHttpClient(authCode, proxy, conf);
+        this._httpClient = new Http2Client(authCode, proxy, conf);
 	}
 
     public PushClient(String masterSecret, String appKey, HttpProxy proxy, ClientConfig conf) {
@@ -99,7 +100,7 @@ public class PushClient {
         this._timeToLive = (Long) conf.get(ClientConfig.TIME_TO_LIVE);
 
         String authCode = ServiceHelper.getBasicAuthorization(appKey, masterSecret);
-        this._httpClient = new NativeHttpClient(authCode, proxy, conf);
+        this._httpClient = new Http2Client(authCode, proxy, conf);
 
     }
 
